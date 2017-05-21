@@ -24,9 +24,12 @@ class Board
      @grid[row][index] = shot_result
    end 
    
-   def print
-
-     
+   def print_grid
+     puts "===" * @length
+     @grid.each do |key, value|
+       puts "#{key} #{value.join(" ")}"
+     end 
+     puts "===" * @length
    end 
   
 end 

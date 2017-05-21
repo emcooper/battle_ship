@@ -96,4 +96,20 @@ class BoardTest < Minitest::Test
     assert_equal 16, board.grid.flatten(2).count(" ")
   end 
    
+   def test_print_grid_prints_in_correct_format
+     board = Board.new(4)
+     board.record_shot("M", "C4")
+     board.record_shot("H", "A1")
+     
+     expected = "============\n* 1 2 3 4\nA H      \nB        \nC       M\nD        \n============\n"
+                 
+     assert_output(expected){board.print_grid}
+   end 
+   
+   def test_print_grid_returns_nil
+     board = Board.new(4)
+
+     assert_nil board.print_grid
+   end 
+     
 end 
