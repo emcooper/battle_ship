@@ -106,10 +106,4 @@ class BoardTest < Minitest::Test
      assert_output(expected){board.print_grid}
    end 
    
-   def test_print_grid_returns_nil
-     board = Board.new(4)
-
-     assert_nil board.print_grid
-   end 
-     
 end 
