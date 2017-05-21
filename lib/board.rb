@@ -1,6 +1,6 @@
 require 'pry'
 class Board
-  attr_reader :length
+  attr_reader :length, :grid
   
   def initialize(length)
     @length = length if length.class == Fixnum
@@ -14,6 +14,19 @@ class Board
        new_grid[letter] = [" "] * length
      end 
      new_grid
+   end 
+   
+   def record_shot(shot_result, coordinate)
+     return nil if !["H", "M"].include?(shot_result)
+     row = coordinate[0]
+     index = coordinate[1].to_i - 1
+     return nil if (@grid[row]).nil? || (@grid[row][index]).nil?
+     @grid[row][index] = shot_result
+   end 
+   
+   def print
+
+     
    end 
   
 end 

@@ -41,5 +41,59 @@ class BoardTest < Minitest::Test
     assert_equal expected_values, board.blank_grid(8).values
   end 
   
+  def test_board_initializes_with_blank_grid_of_length
+    board = Board.new(4)
+    
+    assert_equal 5, board.grid.length
+    assert_equal [1,2,3,4], board.grid["*"]
+    assert_equal [" ", " ", " ", " "], board.grid.values[1..4].uniq.flatten
+  end 
   
+  
+  def test_record_shot_sets_hits_in_given_coordinate_only
+    board = Board.new(4)
+    board.record_shot("H", "B3")
+    
+    assert_equal "H", board.grid["B"][2]
+    assert_equal 15, board.grid.flatten(2).count(" ")
+  end 
+  
+  def test_record_shot_sets_misses_in_given_coordinate_only
+    board = Board.new(4)
+    board.record_shot("M", "C4")
+    
+    assert_equal "M", board.grid["C"][3]
+    assert_equal 15, board.grid.flatten(2).count(" ")
+  end 
+  
+  def test_record_shot_sets_multiple_misses_and_shots_in_given_coordinate_only
+    board = Board.new(4)
+    board.record_shot("M", "C4")
+    board.record_shot("H", "A1")
+    board.record_shot("M", "D3")
+    board.record_shot("H", "B2")
+    
+    assert_equal "M", board.grid["C"][3]
+    assert_equal "H", board.grid["A"][0]
+    assert_equal "M", board.grid["D"][2]
+    assert_equal "H", board.grid["B"][1]
+    assert_equal 12, board.grid.flatten(2).count(" ")
+  end
+  
+  def test_record_shot_will_not_record_invalid_shot_result
+    board = Board.new(4)
+    board.record_shot("S", "C4")
+    board.record_shot(5, "B2")
+    
+    assert_equal " ", board.grid["C"][3]
+    assert_equal " ", board.grid["B"][1]
+  end 
+  
+  def test_record_shot_will_not_record_invalid_coordinate_input
+    board = Board.new(4)
+    board.record_shot("M", "G8")
+    
+    assert_equal 16, board.grid.flatten(2).count(" ")
+  end 
+   
 end 
