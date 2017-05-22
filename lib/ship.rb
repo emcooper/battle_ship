@@ -10,10 +10,29 @@ class Ship
   def set_coordinates(first, last)
     #validated_input = vaidate(coordinates_input) if vaidate(coordinates_input)
     @direction = set_direction(first, last)
-    @coordinates[first] = " "
-    @coordinates[last] = " "
-    
-  
+    row = row(first)
+    column = column(first)
+    if @direction == "east"
+      until column > column(last)
+        @coordinates[row + column.to_s] = " "
+        column += 1
+      end 
+    elsif @direction == "west"
+      until column < column(last)
+        @coordinates[row + column.to_s] = " "
+        column -= 1
+      end 
+    elsif @direction == "south"
+      until row > row(last)
+        @coordinates[row + column.to_s] = " "
+        row = row.next
+      end 
+    elsif @direction == "north"
+      until row < row(last)
+        @coordinates[row + column.to_s] = " "
+        row = previous(row)
+      end   
+    end 
   end
   
   def set_direction(first, last)
@@ -22,8 +41,11 @@ class Ship
       return "south" if row(first) < row(last)
       return "north" if row(first) > row(last) 
   end 
-
   
+  def previous(letter)
+    (letter.ord - 1).chr
+  end 
+
   def row(coordinate)
     coordinate[0]
   end 

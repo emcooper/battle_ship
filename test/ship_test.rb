@@ -11,18 +11,41 @@ class ShipTest < Minitest::Test
     assert_equal false, ship.sunk
   end 
   
-  def test_it_can_set_coordinates_of_2_unit_ship
+  def test_it_can_set_coordinates_of_2_unit_east_ship
     ship = Ship.new(2)
     ship.set_coordinates("A1", "A2")
     
     assert_equal ({"A1" => " ", "A2" => " "}), ship.coordinates
   end 
   
-  def test_it_can_set_coordinates_of_3_unit_ship
-    skip 
+  def test_it_can_set_coordinates_of_3_unit_east_ship
     ship = Ship.new(3)
-    ship.set_coordinates(["A1", "A3"])
+    ship.set_coordinates("A1", "A3")
     expected = {"A1" => " ", "A2" => " ", "A3" => " " }
+    
+    assert_equal expected, ship.coordinates
+  end 
+  
+  def test_it_can_set_coordinates_of_4_unit_west_ship
+    ship = Ship.new(4)
+    ship.set_coordinates("A5", "A2")
+    expected = {"A5" => " ", "A4" => " ", "A3" => " ", "A2" => " " }
+    
+    assert_equal expected, ship.coordinates
+  end 
+  
+  def test_it_can_set_coordinates_of_3_unit_south_ship
+    ship = Ship.new(3)
+    ship.set_coordinates("B1", "D1")
+    expected = {"B1" => " ", "C1" => " ", "D1" => " " }
+    
+    assert_equal expected, ship.coordinates
+  end 
+  
+  def test_it_can_set_coordinates_of_3_unit_north_ship
+    ship = Ship.new(3)
+    ship.set_coordinates("C4", "A4")
+    expected = {"C4" => " ", "B4" => " ", "A4" => " " }
     
     assert_equal expected, ship.coordinates
   end 
@@ -34,6 +57,12 @@ class ShipTest < Minitest::Test
     assert_equal "south", ship.set_direction("B1", "D1")
     assert_equal "east", ship.set_direction("C1", "C3")
     assert_equal "west", ship.set_direction("A4", "A2")
+  end 
+  
+  def test_previous_returns_previous_letter
+    ship = Ship.new(3)
+    
+    assert_equal "A", ship.previous("B")
   end 
   
   def test_row_returns_row
