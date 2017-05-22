@@ -1,4 +1,5 @@
 class Messages
+
   def welcome 
     "Welcome to BATTLESHIP\n\nWould you like to (p)lay, read the (i)nstructions, or (q)uit?"
   end 
@@ -9,7 +10,12 @@ class Messages
     find your opponent’s fleet before they find yours. You will take turns\n
     selecting coordinates to 'hit'. When all coordinates of a ship have been\n
     hit the ship has been 'sunk'. The first person to sink all of the other player's\n
-    ships wins the game."
+    ships wins the game.\n
+    Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
+  end 
+  
+  def game_size_prompt
+    "Would you like to play a Beginner(b), Intermediate(I), or Advanced(A) game?"
   end 
   
   def ship_placement_prompt

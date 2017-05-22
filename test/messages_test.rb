@@ -2,6 +2,7 @@ require './test/test_helper'
 require './lib/messages'
 
 class MessagesTest < Minitest::Test
+  
   def test_welcome_returns_welcome_message
     expected = "Welcome to BATTLESHIP\n\nWould you like to (p)lay, read the (i)nstructions, or (q)uit?"
     actual = Messages.new.welcome
@@ -15,8 +16,16 @@ class MessagesTest < Minitest::Test
     find your opponent’s fleet before they find yours. You will take turns\n
     selecting coordinates to 'hit'. When all coordinates of a ship have been\n
     hit the ship has been 'sunk'. The first person to sink all of the other player's\n
-    ships wins the game."
+    ships wins the game.\n
+    Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
     actual = Messages.new.instructions
+    
+    assert_equal expected, actual
+  end 
+  
+  def test_game_size_prompt_returns_prompt
+    expected = "Would you like to play a Beginner(b), Intermediate(I), or Advanced(A) game?"
+    actual = Messages.new.game_size_prompt
     
     assert_equal expected, actual
   end 
