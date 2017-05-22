@@ -3,20 +3,20 @@ require './lib/board'
 
 class BoardTest < Minitest::Test
   def test_it_initializes_with_length
-    board = Board.new(4)
+    board = Board.new(8)
     
-    assert_equal 4, board.length
+    assert_equal 8, board.length
   end
   
-  def test_length_can_only_be_integer
-    board = Board.new('4')
-    refute board.length
+  def test_length_set_as_default_if_argument_not_integer
+    board = Board.new('8')
+    assert_equal 4, board.length
     
     board = Board.new(4.75)
-    refute board.length
+    assert_equal 4, board.length
     
     board = Board.new(false)
-    refute board.length  
+    assert_equal 4, board.length  
   end 
   
   def test_blank_grid_generates_hash_of_letters_and_arrays

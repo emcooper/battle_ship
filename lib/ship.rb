@@ -1,3 +1,5 @@
+require 'pry'
+
 class Ship
   attr_reader :size, :coordinates, :direction, :sunk
   def initialize(size)
@@ -8,8 +10,9 @@ class Ship
   end 
   
   def set_coordinates(first, last)
-    #validated_input = vaidate(coordinates_input) if vaidate(coordinates_input)
+    #return nil if validate(first, last) == "invalid"
     @direction = set_direction(first, last)
+    return nil && print_error(4) if @direction.nil?
     row = row(first)
     column = column(first)
     if @direction == "east"
@@ -42,6 +45,15 @@ class Ship
       return "north" if row(first) > row(last) 
   end 
   
+  def hit(coordinate)
+    @coordinates[coordinate] = "H"
+    check_if_sunk
+  end 
+  
+  def check_if_sunk
+    @sunk = true if @coordinates.values.uniq == ["H"]
+  end 
+  
   def previous(letter)
     (letter.ord - 1).chr
   end 
@@ -54,7 +66,11 @@ class Ship
     coordinate[1].to_i
   end 
   
-  def validate(coordinates_input)
+  def validate(first, last)
+    # if (row(first) != row(last)) && (column(first) != column(last))
+    #   print_error(4)
+    #   return "invalid"
+    # end 
     # todo need to know how Ship will interact with Board
   end 
   

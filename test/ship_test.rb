@@ -50,6 +50,52 @@ class ShipTest < Minitest::Test
     assert_equal expected, ship.coordinates
   end 
   
+  # come back to: need to find way to suppress minitest output
+  # def test_it_does_not_set_diagonal_coordinates
+  #   ship = Ship.new(3)
+  #   ship.set_coordinates("C4", "A1")
+  #   
+  #   assert_equal ({}), ship.coordinates
+  # end 
+  
+  def test_it_sets_hit_on_given_coordinate_and_not_others
+    ship = Ship.new(3)
+    ship.set_coordinates("C4", "A4")
+    ship.hit("B4")
+    
+    assert_equal "H", ship.coordinates["B4"]
+    assert_equal " ", ship.coordinates["C4"]
+    assert_equal " ", ship.coordinates["A4"]
+  end 
+  
+  def test_hit_changes_sunk_to_true_when_all_coordinates_hit
+    ship = Ship.new(3)
+    ship.set_coordinates("C4", "A4")
+    ship.hit("B4")
+    ship.hit("C4")
+    
+    assert_equal false, ship.sunk
+    
+    ship.hit("A4")
+    
+    assert_equal true, ship.sunk
+  end 
+  
+  def test_check_if_sunk_sets_sunk_correctly
+    ship = Ship.new(3)
+    ship.set_coordinates("A1", "A3")
+    ship.hit("A2")
+    ship.hit("A3")
+    ship.check_if_sunk
+    
+    assert_equal false, ship.sunk
+    
+    ship.hit("A1")
+    ship.check_if_sunk
+    
+    assert_equal true, ship.sunk
+  end 
+  
   def test_set_direction_returns_north_south_east_west
     ship = Ship.new(3)
     

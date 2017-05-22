@@ -3,15 +3,23 @@ class Board
   attr_reader :length, :grid
   
   def initialize(length)
-    @length = length if length.class == Fixnum
-    @grid = blank_grid(@length) if @length
+    @length = validate_length(length)
+    @grid = blank_grid(@length)
+  end 
+  
+  def validate_length(length)
+    if length.is_a? Fixnum 
+      @length = length
+    else 
+      @length = 4
+    end 
   end 
    
    def blank_grid(length)
      new_grid = {}
-     new_grid["*"] = Array (1..length)
-     ("A"..(65+length-1).chr).each do |letter|
-       new_grid[letter] = [" "] * length
+     new_grid["*"] = Array (1..@length)
+     ("A"..(65+@length-1).chr).each do |letter|
+       new_grid[letter] = [" "] * @length
      end 
      new_grid
    end 
