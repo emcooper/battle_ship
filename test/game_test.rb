@@ -7,9 +7,15 @@ class GameTest < Minitest::Test
     assert_equal 4, Game.new.game_size
   end 
   
-  def convert_difficulty_to_number_converts_correctly
+  def test_convert_difficulty_to_number_converts_correctly
     assert_equal 8, Game.new.convert_difficulty_to_number("i")
     assert_equal 12, Game.new.convert_difficulty_to_number("a")
+  end 
+  
+  def test_format_2_coordinate_input_returns_array_of_inputs_ignoring_spaces
+    game = Game.new
+    
+    assert_equal ["A1", "B1"], game.format_2_coordinate_input("A1   B1")
   end 
 
   
