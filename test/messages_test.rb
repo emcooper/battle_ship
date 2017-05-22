@@ -24,8 +24,8 @@ class MessagesTest < Minitest::Test
   end 
   
   def test_game_size_prompt_returns_prompt
-    expected = "Would you like to play a Beginner(b), Intermediate(I), or Advanced(A) game?"
-    actual = Messages.new.game_size_prompt
+    expected = "Would you like to play a Beginner(b), Intermediate(i), or Advanced(a) game?"
+    actual = Messages.new.game_difficulty_prompt
     
     assert_equal expected, actual
   end 

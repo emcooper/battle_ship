@@ -14,8 +14,8 @@ class Messages
     Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
   end 
   
-  def game_size_prompt
-    "Would you like to play a Beginner(b), Intermediate(I), or Advanced(A) game?"
+  def game_difficulty_prompt
+    "Would you like to play a Beginner(b), Intermediate(i), or Advanced(a) game?"
   end 
   
   def ship_placement_prompt
