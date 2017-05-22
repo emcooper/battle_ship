@@ -1,28 +1,22 @@
 class Ship
-  attr_reader :size, :coordinates, :orientation, :sunk
+  attr_reader :size, :coordinates, :direction, :sunk
   def initialize(size)
     @size = size
     @coordinates = {}
-    @orientation = nil
+    @direction = nil
     @sunk = false
   end 
   
   def set_coordinates(first, last)
     #validated_input = vaidate(coordinates_input) if vaidate(coordinates_input)
-    set_orientation(first, last)
+    @direction = set_direction(first, last)
     @coordinates[first] = " "
     @coordinates[last] = " "
+    
+  
   end
   
-  def set_orientation(first, last)
-    if row(first) == row(last)
-      @orientation = "horizontal"
-    elsif column(first) == column(last)
-      @orientation = "vertical"
-    end 
-  end 
-  
-  def direction(first, last)
+  def set_direction(first, last)
       return "east" if column(first) < column(last)
       return "west" if column(first) > column(last)
       return "south" if row(first) < row(last)

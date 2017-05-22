@@ -7,7 +7,7 @@ class ShipTest < Minitest::Test
     
     assert_equal 2, ship.size
     assert_equal ({}), ship.coordinates
-    assert_nil ship.orientation
+    assert_nil ship.direction
     assert_equal false, ship.sunk
   end 
   
@@ -27,27 +27,13 @@ class ShipTest < Minitest::Test
     assert_equal expected, ship.coordinates
   end 
   
-  def test_it_sets_horizontal_orientation
-    ship = Ship.new(3)
-    ship.set_orientation("A1", "A3")
-    
-    assert_equal "horizontal", ship.orientation
-  end 
-  
-  def test_it_sets_vertical_orientation
-    ship = Ship.new(3)
-    ship.set_orientation("C1", "A1")
-    
-    assert_equal "vertical", ship.orientation
-  end 
-  
-  def test_direction_returns_north_south_east_west
+  def test_set_direction_returns_north_south_east_west
     ship = Ship.new(3)
     
-    assert_equal "north", ship.direction("C1", "A1")
-    assert_equal "south", ship.direction("B1", "D1")
-    assert_equal "east", ship.direction("C1", "C3")
-    assert_equal "west", ship.direction("A4", "A2")
+    assert_equal "north", ship.set_direction("C1", "A1")
+    assert_equal "south", ship.set_direction("B1", "D1")
+    assert_equal "east", ship.set_direction("C1", "C3")
+    assert_equal "west", ship.set_direction("A4", "A2")
   end 
   
   def test_row_returns_row
