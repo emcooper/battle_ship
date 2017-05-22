@@ -33,9 +33,9 @@ class Game
   end 
   
   def place_ships
-    ship_coordinates = get_input
-    first = format_2_coordinate_input[ship_coordinates]
-    last = format_2_coordinate_input[ship_coordinates]
+    # ship_coordinates = get_input
+    # first = format_2_coordinate_input[ship_coordinates][0]
+    # last = format_2_coordinate_input[ship_coordinates][0]
     #place ships
   end 
   
