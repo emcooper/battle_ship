@@ -1,10 +1,12 @@
 require 'pry'
 class Board
-  attr_reader :length, :grid
+  attr_reader :length, :grid, :rows, :columns
   
   def initialize(length)
     @length = validate_length(length)
     @grid = blank_grid(@length)
+    @rows = @grid.keys[1..@length]
+    @columns = @grid["*"]
   end 
   
   def validate_length(length)

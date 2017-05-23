@@ -1,4 +1,7 @@
+require 'pry'
 require './lib/ship'
+require './lib/board'
+
 
 class Computer  
   attr_reader :game_size, :fleet, :board
@@ -16,13 +19,32 @@ class Computer
     ships
   end 
   
-  def place_ships
+  def place_ship(ship)
     # choose direction
+    direction = random_direction
     # choose random coordinate w/ in limited range
+    if direction == "east"
+      row = random_row
+    end 
     #find end coordinate
     #pass to Ship set_coordinates
     
   end 
   
+  def random_direction
+    ["south", "east"].sample
+  end 
   
+  def random_row(direction, ship)
+    return @board.rows.sample if direction == "east"
+    return @board.rows[0..@game_size-ship.size].sample if direction == "south"
+  end 
+  
+  def random_column(direction, ship)
+    return @board.columns.sample if direction == "south"
+    return @board.columns[0..@game_size-ship.size].sample if direction == "east"
+  end 
 end 
+
+computer = Computer.new(4)
+puts computer.random_column("east", computer.fleet[0])

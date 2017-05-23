@@ -17,4 +17,26 @@ class ComputerTest < Minitest::Test
     assert_equal 3, Computer.new(8).populate_fleet.count
     assert_equal 4, Computer.new(12).populate_fleet.count  
   end 
+  
+  def test_random_direction_returns_direction
+    computer = Computer.new(4)
+    
+    assert_includes ["south", "east"], computer.random_direction
+    assert_instance_of String, computer.random_direction
+  end 
+  
+  def test_random_row_returns_valid_row
+    computer = Computer.new(4)
+    
+    assert_includes ["A", "B", "C", "D"], computer.random_row("east", Ship.new(2))
+    assert_includes ["A", "B", "C"], computer.random_row("south", Ship.new(2))
+  end 
+  
+  def test_random_column_returns_valid_column
+    computer = Computer.new(4)
+    
+    assert_includes [1, 2, 3, 4], computer.random_column("south", Ship.new(2))
+    assert_includes [1, 2, 3], computer.random_column("east", Ship.new(2))
+  end 
+  
 end 
