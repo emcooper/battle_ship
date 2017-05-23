@@ -84,6 +84,7 @@ class MessagesTest < Minitest::Test
   end 
   
   def test_end_game_win_returns_message_with_shots_and_time
+    skip
     expected = "Congrats, you won!\n
     It took you 8 shots to sink your opponent's ships.\n
     The game took 2 minutes and 30 seconds."

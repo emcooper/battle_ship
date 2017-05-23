@@ -2,7 +2,6 @@ require 'pry'
 require './lib/ship'
 require './lib/board'
 
-
 class Computer  
   attr_reader :game_size, :fleet, :board
   attr_accessor :shots
@@ -62,8 +61,3 @@ class Computer
   end 
 end 
 
-computer = Computer.new(4)
-
-computer.place_ship(computer.fleet[0])
-
-puts computer.fleet[0].coordinates

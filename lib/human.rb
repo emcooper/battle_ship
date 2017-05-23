@@ -1,4 +1,6 @@
-require "./lib/lib_helper"
+
+require './lib/ship'
+require './lib/board'
 
 class Human 
   attr_reader :game_size, :fleet, :board

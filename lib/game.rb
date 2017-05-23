@@ -1,5 +1,8 @@
 require 'pry'
-require "./lib/lib_helper"
+require './lib/computer'
+require './lib/human'
+require './lib/messages'
+require './lib/board'
 
 class Game
   attr_reader :game_size, :human, :computer
