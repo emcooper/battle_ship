@@ -30,14 +30,13 @@ class MessagesTest < Minitest::Test
     assert_equal expected, actual
   end 
   
-  def test_ship_placement_prompt_returns_prompt
+  def test_computer_ship_placement_prompt_returns_prompt
     expected = "I have laid out my ships on the grid.\n
     You now need to layout your two ships.\n
     The first is two units long and the\n
     second is three units long.\n
-    The grid has A1 at the top left and D4 at the bottom right.\n\n
-    Enter the squares for the two-unit ship:"
-    actual = Messages.new.ship_placement_prompt
+    The grid has A1 at the top left and D4 at the bottom right."
+    actual = Messages.new.computer_ship_placement_prompt
     
     assert_equal expected, actual
   end 

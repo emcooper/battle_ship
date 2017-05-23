@@ -22,9 +22,6 @@ class Computer
   def place_all_ships
     @fleet.each do |ship|
       place_ship(ship)
-      # if ship.size != ship.coordinates.count
-      #   binding.pry
-      # end 
     end 
   end 
   
@@ -34,9 +31,6 @@ class Computer
     # todo: check it doesn't intersect with other ship
     last_coordinate = last_coordinate(first_coordinate, ship.size, direction)
     ship.set_coordinates(first_coordinate, last_coordinate)  
-    if ship.size != ship.coordinates.count
-      binding.pry
-    end 
   end 
   
   def random_coordinate(direction, ship)

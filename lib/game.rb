@@ -1,10 +1,13 @@
-require "./lib/messages"
+require 'pry'
+require "./lib/lib_helper"
 
 class Game
   attr_reader :game_size
   def initialize
     @messager = Messages.new
     @game_size = 4
+    @computer = nil
+    @human = nil
   end 
   
   #start
@@ -27,16 +30,22 @@ class Game
   def play 
     puts @messager.game_difficulty_prompt
     @game_size = convert_difficulty_to_number(get_input)
-    puts @messager.ship_placement_prompt
-    place_ships
+    @computer = Computer.new(@game_size)
+    @human = Human.new(@game_size)
+    @computer.place_all_ships
+    puts @messager.computer_ship_placement_prompt
+    place_all_human_ships
+
+    
     #set ship 
   end 
-  
-  def place_ships
-    # ship_coordinates = get_input
-    # first = format_2_coordinate_input[ship_coordinates][0]
-    # last = format_2_coordinate_input[ship_coordinates][0]
-    #place ships
+
+  def place_all_human_ships
+    @human.fleet.each do |ship|
+      puts @messager.human_ship_placement_prompt(ship.size)
+      coordinates = format_coordinates(get_input)
+      ship.set_coordinates(coordinates[0], coordinates[1])
+    end 
   end 
   
   def convert_difficulty_to_number(difficulty)
@@ -45,8 +54,10 @@ class Game
     return 12 if difficulty.downcase == "a"
   end 
   
-  def format_2_coordinate_input(input)
-    [input.delete(" ")[0..1], input.delete(" ")[2..3]]
+  def format_coordinates(input)
+    separated = input.split(" ")
+    separated = separated.join if separated.count < 2
+    return separated
   end 
   #end
   

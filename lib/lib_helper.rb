@@ -1,0 +1,5 @@
+require './lib/computer'
+require './lib/human'
+require './lib/messages'
+require './lib/board'
+require './lib/game'

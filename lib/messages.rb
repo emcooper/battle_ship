@@ -18,13 +18,16 @@ class Messages
     "Would you like to play a Beginner(b), Intermediate(i), or Advanced(a) game?"
   end 
   
-  def ship_placement_prompt()
+  def computer_ship_placement_prompt()
     "I have laid out my ships on the grid.\n
     You now need to layout your two ships.\n
     The first is two units long and the\n
     second is three units long.\n
-    The grid has A1 at the top left and D4 at the bottom right.\n\n
-    Enter the squares for the two-unit ship:"
+    The grid has A1 at the top left and D4 at the bottom right."
+  end 
+  
+  def human_ship_placement_prompt(ship_length)
+    "Please enter coordinates for your #{ship_length}-unit ship:"
   end 
   
   def additional_ship_prompt(size)
