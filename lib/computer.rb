@@ -19,12 +19,24 @@ class Computer
     ships
   end 
   
+  def place_all_ships
+    @fleet.each do |ship|
+      place_ship(ship)
+      # if ship.size != ship.coordinates.count
+      #   binding.pry
+      # end 
+    end 
+  end 
+  
   def place_ship(ship)
     direction = random_direction
     first_coordinate = random_coordinate(direction, ship)
     # todo: check it doesn't intersect with other ship
     last_coordinate = last_coordinate(first_coordinate, ship.size, direction)
     ship.set_coordinates(first_coordinate, last_coordinate)  
+    if ship.size != ship.coordinates.count
+      binding.pry
+    end 
   end 
   
   def random_coordinate(direction, ship)
@@ -33,9 +45,9 @@ class Computer
   
   def last_coordinate(first_coordinate, ship_length, direction)
     if direction == "east"
-      return first_coordinate[0] + (first_coordinate[1].to_i + ship_length-1).to_s
+      return first_coordinate[0] + (first_coordinate[1..3].to_i + ship_length-1).to_s
     elsif direction == "south"
-      return (first_coordinate[0].ord + ship_length-1).chr + first_coordinate[1]
+      return (first_coordinate[0].ord + ship_length-1).chr + first_coordinate[1..3]
     end 
   end 
   

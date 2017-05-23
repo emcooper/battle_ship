@@ -53,12 +53,35 @@ class ComputerTest < Minitest::Test
     assert_equal "D1", computer.last_coordinate("B1", 3, "south")
   end 
   
-  def test_place_ship_sets_coordinates
+  def test_place_ship_sets_coordinates_for_2_unit_ship
     computer = Computer.new(4)
     
     computer.place_ship(computer.fleet[0])
     
     assert_equal 2, computer.fleet[0].coordinates.count
+  end 
+  
+  def test_place_ship_sets_coordinates_for_4_unit_ship
+    computer = Computer.new(8)
+    computer.place_ship(computer.fleet[2])
+    
+    assert_equal 4, computer.fleet[2].coordinates.count
+  end 
+  def test_place_ship_sets_coordinates_for_5_unit_ship
+    computer = Computer.new(12)
+    computer.place_ship(computer.fleet[3])
+    
+    assert_equal 5, computer.fleet[3].coordinates.count
+  end 
+  
+  def test_place_all_ships_sets_coordinates_for_all_ships_for_12_size_board
+    computer = Computer.new(12)
+    computer.place_all_ships
+    
+    assert_equal 2, computer.fleet[0].coordinates.count
+    assert_equal 3, computer.fleet[1].coordinates.count
+    assert_equal 4, computer.fleet[2].coordinates.count
+    assert_equal 5, computer.fleet[3].coordinates.count
   end 
   
 end 

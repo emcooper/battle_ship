@@ -63,7 +63,7 @@ class Ship
   end 
   
   def column(coordinate)
-    coordinate[1].to_i
+    coordinate[1..3].to_i
   end 
   
   def validate(first, last)
