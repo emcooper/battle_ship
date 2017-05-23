@@ -2,10 +2,12 @@ require "./lib/lib_helper"
 
 class Human 
   attr_reader :game_size, :fleet, :board
+  attr_accessor :shots
   def initialize(game_size)
     @game_size = game_size
     @fleet = populate_fleet
     @board = Board.new(game_size)
+    @shots = []
   end 
   
   def populate_fleet

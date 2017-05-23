@@ -19,6 +19,12 @@ class GameTest < Minitest::Test
     assert_equal ["A12", "B12"], game.format_coordinates("  A12 B12 ")
   end 
   
+  def test_shot_result_returns_M_if_not_hit
+    game = Game.new
+    
+    assert_equal ["M", nil], game.shot_result("A3", Computer.new(4))
+  end 
+   
 
   
 end 

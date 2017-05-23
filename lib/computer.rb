@@ -5,10 +5,12 @@ require './lib/board'
 
 class Computer  
   attr_reader :game_size, :fleet, :board
+  attr_accessor :shots
   def initialize(game_size)
     @game_size = game_size
     @fleet = populate_fleet
     @board = Board.new(game_size)
+    @shots = []
   end 
   
   def populate_fleet
@@ -33,7 +35,7 @@ class Computer
     ship.set_coordinates(first_coordinate, last_coordinate)  
   end 
   
-  def random_coordinate(direction, ship)
+  def random_coordinate(direction = "none", ship = "none")
     random_row(direction, ship) + random_column(direction, ship).to_s
   end 
   
@@ -50,12 +52,12 @@ class Computer
   end 
   
   def random_row(direction, ship)
-    return @board.rows.sample if direction == "east"
+    return @board.rows.sample if direction == "east" || direction == "none"
     return @board.rows[0..@game_size-ship.size].sample if direction == "south"
   end 
   
   def random_column(direction, ship)
-    return @board.columns.sample if direction == "south"
+    return @board.columns.sample if direction == "south" || direction == "none"
     return @board.columns[0..@game_size-ship.size].sample if direction == "east"
   end 
 end 

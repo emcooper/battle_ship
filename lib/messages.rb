@@ -58,6 +58,14 @@ class Messages
     "You sunk a #{size}-unit ship!"
   end 
   
+  def computer_shot(position, result) 
+    "The computer fired at #{position}. It was a #{result}!"
+  end 
+  
+  def computer_sink(size)
+    "The Computer sunk your #{size}-unit ship!"
+  end 
+  
   def end_game_win(shots, time)
     "Congrats, you won!\n
     It took you #{shots} shots to sink your opponent's ships.\n
