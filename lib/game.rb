@@ -42,49 +42,53 @@ class Game
   
   def shot_sequence
     #repeat until at ships sunk:
-    
+    while fleet_sunk?.nil?
     #human shot
-    puts @messager.fire_prompt
-    shot = get_player_shot
-    result = shot_result(shot, @computer)
-    h_or_m = result[0]
-    if h_or_m == "H"
-      hit_ship = result[1]
-      puts @messager.player_hit
-      @human.board.record_shot("H", shot)
-      if result[1].sunk == true
-        puts @messager.player_sink(hit_ship.size)
+      puts @messager.fire_prompt
+      shot = get_player_shot
+      result = shot_result(shot, @computer)
+      h_or_m = result[0]
+      if h_or_m == "H"
+        hit_ship = result[1]
+        puts @messager.player_hit
+        @human.board.record_shot("H", shot)
+        if result[1].sunk == true
+          puts @messager.player_sink(hit_ship.size)
+        end 
+      elsif h_or_m == "M"
+        puts @messager.player_miss
+        @human.board.record_shot("M", shot)
       end 
-    elsif h_or_m == "M"
-      puts @messager.player_miss
-      @human.board.record_shot("M", shot)
+      @human.board.print_grid
+      return "end" if fleet_sunk?
+      puts "press enter to proceed"
+      get_input
+      
+      #computer shot
+      shot = get_computer_shot
+      result = shot_result(shot, @human)
+      h_or_m = result[0]
+      if h_or_m == "H"
+        hit_ship = result[1]
+        puts @messager.computer_shot(shot, "Hit")
+        @computer.board.record_shot("H", shot)
+        if result[1].sunk == true
+          puts @messager.computer_sink(hit_ship.size)
+        end 
+      elsif h_or_m == "M"
+        puts @messager.computer_shot(shot, "Miss")
+        @computer.board.record_shot("M", shot)
+      end
+      @computer.board.print_grid
     end 
-    @human.board.print_grid
-    puts "press enter to proceed"
-    get_input
-    
-    #computer shot
-    shot = get_computer_shot
-    result = shot_result(shot, @human)
-    h_or_m = result[0]
-    if h_or_m == "H"
-      hit_ship = result[1]
-      puts @messager.computer_shot(shot, "Hit")
-      @computer.board.record_shot("H", shot)
-      if result[1].sunk == true
-        puts @messager.computer_sink(hit_ship.size)
-      end 
-    elsif h_or_m == "M"
-      puts @messager.computer_shot(shot, "Miss")
-      @computer.board.record_shot("M", shot)
-    end
-    @computer.board.print_grid
-
-    #find shot result 
-    #message
-    #update grid
-    #display computer offensive grid
-
+    puts "end!!"
+  end 
+  
+  def fleet_sunk?
+    winner = nil
+    winner = @human if @computer.fleet.count { |ship| ship.sunk == true}  == @computer.fleet.count
+    winner = @computer if @human.fleet.count { |ship| ship.sunk == true}  == @human.fleet.count  
+    return winner
   end 
   
   def get_player_shot
@@ -101,7 +105,6 @@ class Game
     result = ["M", nil]
     opponent.fleet.each do |ship|
       if ship.coordinates.keys.include?(shot_coordinate)
-        binding.pry 
         ship.hit(shot_coordinate)
         result = ["H", ship] 
       end 
