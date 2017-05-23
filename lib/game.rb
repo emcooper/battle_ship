@@ -42,7 +42,7 @@ class Game
   
   def shot_sequence
     #repeat until at ships sunk:
-    while fleet_sunk?.nil?
+    while winner.nil?
     #human shot
       puts @messager.fire_prompt
       shot = get_player_shot
@@ -60,7 +60,7 @@ class Game
         @human.board.record_shot("M", shot)
       end 
       @human.board.print_grid
-      return "end" if fleet_sunk?
+      break if winner
       puts "press enter to proceed"
       get_input
       
@@ -81,10 +81,18 @@ class Game
       end
       @computer.board.print_grid
     end 
-    puts "end!!"
+    end_game
   end 
   
-  def fleet_sunk?
+  def end_game
+    if winner == @human
+      puts @messager.end_game_win(@human.shots.count, "5 hrs")
+    elsif winner == @computer 
+      puts @messager.end_game_lose(@computer.shots.count, "6 hrs")
+    end   
+  end 
+  
+  def winner
     winner = nil
     winner = @human if @computer.fleet.count { |ship| ship.sunk == true}  == @computer.fleet.count
     winner = @computer if @human.fleet.count { |ship| ship.sunk == true}  == @human.fleet.count  

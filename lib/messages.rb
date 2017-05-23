@@ -67,9 +67,7 @@ class Messages
   end 
   
   def end_game_win(shots, time)
-    "Congrats, you won!\n
-    It took you #{shots} shots to sink your opponent's ships.\n
-    The game took #{time}."
+    "Congrats, you won!\nIt took you #{shots} shots to sink your opponent's ships.\nThe game took #{time}."
   end 
   
   def end_game_lose(shots, time)

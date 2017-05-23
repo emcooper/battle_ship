@@ -24,6 +24,7 @@ class GameTest < Minitest::Test
     
     assert_equal ["M", nil], game.shot_result("A3", Computer.new(4))
   end 
+
    
 
   
