@@ -39,4 +39,26 @@ class ComputerTest < Minitest::Test
     assert_includes [1, 2, 3], computer.random_column("east", Ship.new(2))
   end 
   
+  def test_random_coordinate_returns_coordinate
+    computer = Computer.new(4)
+    
+    assert_includes ["A", "B", "C", "D"], computer.random_coordinate("south", Ship.new(2))[0]
+    assert_includes [1, 2, 3, 4], computer.random_coordinate("south", Ship.new(2))[1].to_i
+  end 
+  
+  def test_last_coordinate_returns_correct_coordinate
+    computer = Computer.new(4)
+    
+    assert_equal "A2", computer.last_coordinate("A1", 2, "east")
+    assert_equal "D1", computer.last_coordinate("B1", 3, "south")
+  end 
+  
+  def test_place_ship_sets_coordinates
+    computer = Computer.new(4)
+    
+    computer.place_ship(computer.fleet[0])
+    
+    assert_equal 2, computer.fleet[0].coordinates.count
+  end 
+  
 end 

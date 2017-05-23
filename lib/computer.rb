@@ -20,15 +20,23 @@ class Computer
   end 
   
   def place_ship(ship)
-    # choose direction
     direction = random_direction
-    # choose random coordinate w/ in limited range
+    first_coordinate = random_coordinate(direction, ship)
+    # todo: check it doesn't intersect with other ship
+    last_coordinate = last_coordinate(first_coordinate, ship.size, direction)
+    ship.set_coordinates(first_coordinate, last_coordinate)  
+  end 
+  
+  def random_coordinate(direction, ship)
+    random_row(direction, ship) + random_column(direction, ship).to_s
+  end 
+  
+  def last_coordinate(first_coordinate, ship_length, direction)
     if direction == "east"
-      row = random_row
+      return first_coordinate[0] + (first_coordinate[1].to_i + ship_length-1).to_s
+    elsif direction == "south"
+      return (first_coordinate[0].ord + ship_length-1).chr + first_coordinate[1]
     end 
-    #find end coordinate
-    #pass to Ship set_coordinates
-    
   end 
   
   def random_direction
@@ -47,4 +55,7 @@ class Computer
 end 
 
 computer = Computer.new(4)
-puts computer.random_column("east", computer.fleet[0])
+
+computer.place_ship(computer.fleet[0])
+
+puts computer.fleet[0].coordinates
