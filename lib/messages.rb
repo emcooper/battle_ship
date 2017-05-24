@@ -35,6 +35,18 @@ class Messages
     "Enter the squares for the #{size}-unit ship:"
   end 
   
+  def player_board_title
+    "Your shots:"
+  end 
+  
+  def computer_board_title
+    "The computer's shots:"
+  end 
+  
+  def proceed
+    "press enter to proceed"
+  end 
+  
   def fire_prompt
     "Enter coordinate to fire on:"
   end  

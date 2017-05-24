@@ -12,11 +12,12 @@ class Human
     @game_size = game_size
     @fleet = populate_fleet
     @board = Board.new(game_size)
+    @messager = Messages.new
     @shots = []
   end 
 
   def place_all_ships
-    @messager = Messages.new
+    
     @fleet.each do |ship|
       #while ship has empty coordinates, keep looping
       while ship.coordinates.empty? 

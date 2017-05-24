@@ -1,4 +1,5 @@
 require 'pry'
+require 'colorize'
 require './lib/computer'
 require './lib/human'
 require './lib/messages'
@@ -20,10 +21,9 @@ class Game
     input = @human.get_input
     while input != "p" && input != "q"
       puts @messager.instructions if input == "i" 
-      input = get_input
+      input = @human.get_input
     end 
     play if input == "p"
-    
   end 
   
   #play
@@ -43,6 +43,8 @@ class Game
     #repeat until at ships sunk:
     while winner.nil?
     #human shot
+      puts @messager.player_board_title
+      @human.board.print_grid
       puts @messager.fire_prompt
       shot = @human.get_player_shot
       result = shot_result(shot, @computer)
@@ -58,9 +60,10 @@ class Game
         puts @messager.player_miss
         @human.board.record_shot("M", shot)
       end 
+      puts @messager.player_board_title
       @human.board.print_grid
       break if winner
-      puts "press enter to proceed"
+      puts @messager.proceed
       @human.get_input
       
       #computer shot
@@ -79,8 +82,9 @@ class Game
         @computer.board.record_shot("M", shot)
       end
       @computer.board.print_grid
+      puts @messager.proceed
     end 
-    end_game
+    end_game if winner
   end 
   
   def end_game
@@ -111,9 +115,9 @@ class Game
   end 
 
   def convert_difficulty_to_number(difficulty)
-    return 4 if difficulty.downcase == "b"
     return 8 if difficulty.downcase == "i"
     return 12 if difficulty.downcase == "a"
+    else return 4 
   end 
   
   def format_coordinates(input)
@@ -125,7 +129,7 @@ class Game
   def game_time
     sec = @timer["end"].sec - @timer["start"].sec
     min = @timer["end"].min - @timer["start"].min
-    hours = @timer["end"].hour - @timer["start"].hour
-    "#{hours} hours, #{min} minutes and #{sec} seconds"
+    hours = @timer["end"].hour - @timer["start"].hour 
+    "#{hours * 60 + min} minutes and #{sec} seconds"
   end 
 end 
