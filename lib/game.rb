@@ -62,7 +62,7 @@ class Game
       @human.get_input
       
       #computer shot
-      shot = get_computer_shot
+      shot = @computer.get_computer_shot
       result = shot_result(shot, @human)
       h_or_m = result[0]
       if h_or_m == "H"
@@ -101,10 +101,10 @@ class Game
   #   return @human.shots.last
   # end 
   
-  def get_computer_shot
-    @computer.shots << @computer.random_coordinate
-    return @computer.shots.last
-  end 
+  # def get_computer_shot
+  #   @computer.shots << @computer.random_coordinate
+  #   return @computer.shots.last
+  # end 
   
   def shot_result(shot_coordinate, opponent)
     result = ["M", nil]

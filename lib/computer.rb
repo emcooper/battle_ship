@@ -28,6 +28,16 @@ class Computer
     ship.set_coordinates(first_coordinate, last_coordinate) if valid
   end 
   
+  def get_computer_shot
+    current_shot_count = @shots.count
+    while current_shot_count == @shots.count
+      shot = random_coordinate
+      error_codes = validate_shot(shot)
+      @shots << shot if error_codes.empty?
+      return @shots.last if error_codes.empty?
+    end 
+  end 
+  
   def random_coordinate(direction = "none", ship = "none")
     random_row(direction, ship) + random_column(direction, ship).to_s
   end 
