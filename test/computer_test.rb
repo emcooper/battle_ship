@@ -67,6 +67,7 @@ class ComputerTest < Minitest::Test
     
     assert_equal 4, computer.fleet[2].coordinates.count
   end 
+  
   def test_place_ship_sets_coordinates_for_5_unit_ship
     computer = Computer.new(12)
     computer.place_ship(computer.fleet[3])
