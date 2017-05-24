@@ -11,10 +11,11 @@ class Game
     @game_size = 4
     @computer = nil
     @human = Human.new(4)
+    @timer = {"start" => nil,"end" => nil}
   end 
-  
-  #start
+
   def start 
+    @timer["start"] = Time.now
     puts @messager.welcome
     input = @human.get_input
     while input != "p" && input != "q"
@@ -22,6 +23,7 @@ class Game
       input = get_input
     end 
     play if input == "p"
+    
   end 
   
   #play
@@ -82,12 +84,13 @@ class Game
   end 
   
   def end_game
+    @timer["end"] = Time.now
     if winner == @human
-      puts @messager.end_game_win(@human.shots.count, "5 hrs")
+      puts @messager.end_game_win(@human.shots.count, game_time)
     elsif winner == @computer 
-      puts @messager.end_game_lose(@computer.shots.count, "6 hrs")
-    end   
-  end 
+      puts @messager.end_game_lose(@computer.shots.count, game_time)
+    end 
+  end
   
   def winner
     winner = nil
@@ -95,17 +98,7 @@ class Game
     winner = @computer if @human.fleet.count { |ship| ship.sunk == true}  == @human.fleet.count  
     return winner
   end 
-  
-  # def get_player_shot
-  #   @human.shots << format_coordinates(@human.get_input)
-  #   return @human.shots.last
-  # end 
-  
-  # def get_computer_shot
-  #   @computer.shots << @computer.random_coordinate
-  #   return @computer.shots.last
-  # end 
-  
+
   def shot_result(shot_coordinate, opponent)
     result = ["M", nil]
     opponent.fleet.each do |ship|
@@ -117,14 +110,6 @@ class Game
     result 
   end 
 
-  # def place_all_human_ships
-  #   @human.fleet.each do |ship|
-  #     puts @messager.human_ship_placement_prompt(ship.size)
-  #     coordinates = format_coordinates(@human.get_input)
-  #     ship.set_coordinates(coordinates[0], coordinates[1])
-  #   end 
-  # end 
-  
   def convert_difficulty_to_number(difficulty)
     return 4 if difficulty.downcase == "b"
     return 8 if difficulty.downcase == "i"
@@ -136,7 +121,11 @@ class Game
     separated = separated.join if separated.count < 2
     return separated
   end 
-  #end
   
-
+  def game_time
+    sec = @timer["end"].sec - @timer["start"].sec
+    min = @timer["end"].min - @timer["start"].min
+    hours = @timer["end"].hour - @timer["start"].hour
+    "#{hours} hours, #{min} minutes and #{sec} seconds"
+  end 
 end 
