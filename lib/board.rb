@@ -36,9 +36,9 @@ class Board
    end 
    
    def print_grid
-     puts "===". * @length
+     puts "===" * @length
      @grid.each do |key, value|
-       puts "#{key} #{value.join(" ")}".red
+       puts "#{key} #{value.join(" ")}"
      end 
      puts "===" * @length
    end 

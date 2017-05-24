@@ -1,8 +1,10 @@
 require 'pry'
+require './lib/player'
 require './lib/ship'
 require './lib/board'
 
 class Computer  
+  include Player
   attr_reader :game_size, :fleet, :board
   attr_accessor :shots
   def initialize(game_size)
@@ -10,14 +12,6 @@ class Computer
     @fleet = populate_fleet
     @board = Board.new(game_size)
     @shots = []
-  end 
-  
-  def populate_fleet
-    ships = [Ship.new(2)]
-    ships << Ship.new(3)
-    ships << Ship.new(4) if @game_size > 4 
-    ships << Ship.new(5) if @game_size > 8
-    ships
   end 
   
   def place_all_ships
