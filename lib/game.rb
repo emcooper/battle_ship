@@ -10,13 +10,13 @@ class Game
     @messager = Messages.new
     @game_size = 4
     @computer = nil
-    @human = nil
+    @human = Human.new(4)
   end 
   
   #start
   def start 
     puts @messager.welcome
-    input = get_input
+    input = @human.get_input
     while input != "p" && input != "q"
       puts @messager.instructions if input == "i" 
       input = get_input
@@ -24,25 +24,19 @@ class Game
     play if input == "p"
   end 
   
-  def get_input
-    print ">"
-    gets.chomp
-  end 
-  
   #play
   def play 
     puts @messager.game_difficulty_prompt
-    @game_size = convert_difficulty_to_number(get_input)
+    @game_size = convert_difficulty_to_number(@human.get_input)
     @computer = Computer.new(@game_size)
     @human = Human.new(@game_size)
     @computer.place_all_ships
     puts @messager.computer_ship_placement_prompt
-    place_all_human_ships
+    @human.place_all_ships
     shot_sequence
     #shot sequence 
   end 
     
-  
   def shot_sequence
     #repeat until at ships sunk:
     while winner.nil?
@@ -65,7 +59,7 @@ class Game
       @human.board.print_grid
       break if winner
       puts "press enter to proceed"
-      get_input
+      @human.get_input
       
       #computer shot
       shot = get_computer_shot
@@ -103,7 +97,7 @@ class Game
   end 
   
   def get_player_shot
-    @human.shots << format_coordinates(get_input)
+    @human.shots << format_coordinates(@human.get_input)
     return @human.shots.last
   end 
   
@@ -123,13 +117,13 @@ class Game
     result 
   end 
 
-  def place_all_human_ships
-    @human.fleet.each do |ship|
-      puts @messager.human_ship_placement_prompt(ship.size)
-      coordinates = format_coordinates(get_input)
-      ship.set_coordinates(coordinates[0], coordinates[1])
-    end 
-  end 
+  # def place_all_human_ships
+  #   @human.fleet.each do |ship|
+  #     puts @messager.human_ship_placement_prompt(ship.size)
+  #     coordinates = format_coordinates(@human.get_input)
+  #     ship.set_coordinates(coordinates[0], coordinates[1])
+  #   end 
+  # end 
   
   def convert_difficulty_to_number(difficulty)
     return 4 if difficulty.downcase == "b"

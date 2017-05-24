@@ -77,4 +77,11 @@ class Messages
     The game took #{time}."
   end
   
+  def print_errors(error_codes)
+    puts "No Overlapping Ships!" if error_codes.include?(1)
+    puts "Ships must be horizontal or vertical!" if error_codes.include?(2)
+    puts "Coordinates do not match ship length!" if error_codes.include?(3)
+    puts "Coordinates do not fall on the board!" if error_codes.include?(4)
+  end 
+  
 end 

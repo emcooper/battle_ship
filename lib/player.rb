@@ -11,15 +11,10 @@ module Player
   
   def validate_ship_coordinates(first, last, ship_length)
     error_codes = []
-    #no overlapping (1)
     error_codes << 1 if overlapping_ships?(first, last)
-    #only horizontal or vertical (2)
     error_codes << 2 if diagonal?(first, last)
-    #correct length (3)
     error_codes << 3 if wrong_length?(first, last, ship_length)
-    #on board? (4)
     error_codes << 4 if off_board?(first, last, ship_length)
-    #return error_codes
     error_codes
   end 
   
