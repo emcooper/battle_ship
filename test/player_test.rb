@@ -3,6 +3,20 @@ require './lib/player'
 require './lib/human'
 
 class PlayerTest < Minitest::Test
+  def test_validate_ship_coordinates_returns_no_codes_for_valid_coordinates
+    player = Human.new(4)
+    
+    assert_equal [], player.validate_ship_coordinates("A1", "A2", 2)
+  end 
+  
+  def test_validate_ship_coordinates_returns_code_1_for_overlapping_coordinates
+    player = Human.new(4)
+    player.populate_fleet
+    player.fleet[0].set_coordinates("A1", "A2")
+    
+    assert_equal [1], player.validate_ship_coordinates("A1", "C1", 3)
+  end 
+  
   def test_validate_ship_coordinates_returns_code_2_for_diagonal_coordinates
     player = Human.new(4)
     
@@ -25,5 +39,23 @@ class PlayerTest < Minitest::Test
     player = Human.new(4)
     
     assert_equal [], player.validate_ship_coordinates("A1", "A2", 2)
+  end 
+  
+  def test_validate_ship_coordinates_returns_3_codes_for_coordinates_breaking_3_rules
+    player = Human.new(4)
+    player.populate_fleet
+    player.fleet[0].set_coordinates("A1", "A2")
+    
+    assert_equal [1,2,4], player.validate_ship_coordinates("A1", "B5", 2)
+    assert_equal [1,3,4], player.validate_ship_coordinates("A1", "A5", 2)
+  end 
+  
+  def test_other_ship_coordinates_returns_array_of_coordinates
+    player = Human.new(4)
+    player.populate_fleet
+    player.fleet[0].set_coordinates("A1", "A2")
+    player.fleet[1].set_coordinates("B1", "B3")
+    
+    assert_equal ["A1", "A2", "B1", "B2", "B3"], player.other_ship_coordinates
   end 
 end 
