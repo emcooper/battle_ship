@@ -1,3 +1,4 @@
+require 'colorize'
 require 'pry'
 class Board
   attr_reader :length, :grid, :rows, :columns
@@ -35,9 +36,9 @@ class Board
    end 
    
    def print_grid
-     puts "===" * @length
+     puts "===". * @length
      @grid.each do |key, value|
-       puts "#{key} #{value.join(" ")}"
+       puts "#{key} #{value.join(" ")}".red
      end 
      puts "===" * @length
    end 
