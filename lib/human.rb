@@ -22,17 +22,27 @@ class Human
       while ship.coordinates.empty? 
         puts @messager.human_ship_placement_prompt(ship.size)
         coordinates = format_coordinates(get_input)
-        valid = validate(coordinates, ship.size).empty?
+        valid = validate_ships(coordinates, ship.size).empty?
         ship.set_coordinates(coordinates[0], coordinates[1]) if valid
       end 
     end 
   end 
   
-  def validate(coordinates, ship_size)
+  def validate_ships(coordinates, ship_size)
     error_codes = validate_ship_coordinates(coordinates[0], coordinates[1], ship_size)
-    #have messager print appropriate errors
     @messager.print_errors(error_codes)
     return error_codes
+  end 
+  
+  def get_player_shot
+    current_shot_count = @shots.count
+    while current_shot_count == @shots.count
+      shot = format_coordinates(get_input)
+      error_codes = validate_shot(shot)
+      @messager.print_errors(error_codes)
+      @shots << shot if error_codes.empty?
+      return @shots.last if error_codes.empty?
+    end 
   end 
   
   def format_coordinates(input)

@@ -14,7 +14,14 @@ module Player
     error_codes << 1 if overlapping_ships?(first, last)
     error_codes << 2 if diagonal?(first, last)
     error_codes << 3 if wrong_length?(first, last, ship_length)
-    error_codes << 4 if off_board?(first, last, ship_length)
+    error_codes << 4 if off_board?(first, last)
+    error_codes
+  end 
+  
+  def validate_shot(shot)
+    error_codes = []
+    error_codes << 5 if off_board?(shot)
+    error_codes << 6 if @shots.include?(shot)
     error_codes
   end 
   
@@ -34,7 +41,7 @@ module Player
     (row(first) != row(last)) && (column(first) != column(last))
   end 
   
-  def off_board?(first, last, ship_length)
+  def off_board?(first, last = "A1")
     numerical_rows_and_columns(first, last).any? {|number| number > @game_size}
   end 
   
@@ -84,10 +91,6 @@ module Player
   
   def numerical_rows_and_columns(first, last)
     [row(first).ord - 64, row(last).ord - 64, column(first), column(last)]
-  end 
-
-  def validate_shot
-    
   end 
   
   def row(coordinate)

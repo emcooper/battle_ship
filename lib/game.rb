@@ -42,7 +42,7 @@ class Game
     while winner.nil?
     #human shot
       puts @messager.fire_prompt
-      shot = get_player_shot
+      shot = @human.get_player_shot
       result = shot_result(shot, @computer)
       h_or_m = result[0]
       if h_or_m == "H"
@@ -96,10 +96,10 @@ class Game
     return winner
   end 
   
-  def get_player_shot
-    @human.shots << format_coordinates(@human.get_input)
-    return @human.shots.last
-  end 
+  # def get_player_shot
+  #   @human.shots << format_coordinates(@human.get_input)
+  #   return @human.shots.last
+  # end 
   
   def get_computer_shot
     @computer.shots << @computer.random_coordinate

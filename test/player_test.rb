@@ -58,4 +58,27 @@ class PlayerTest < Minitest::Test
     
     assert_equal ["A1", "A2", "B1", "B2", "B3"], player.other_ship_coordinates
   end 
+  
+  def test_validate_shot_returns_no_errors_for_valid_shots
+    player = Human.new(4)
+    
+    assert_equal [], player.validate_shot("A4")
+    assert_equal [], player.validate_shot("D2")
+  end 
+  
+  def test_validate_shot_returns_5_for_off_board_shots
+    player = Human.new(4)
+    
+    assert_equal [5], player.validate_shot("A5")
+    assert_equal [5], player.validate_shot("E1")
+  end 
+  
+  def test_validate_shot_returns_6_for_repeat_shots
+    player = Human.new(4)
+    player.shots = ["A1", "C3"]
+    
+    assert_equal [6], player.validate_shot("A1")
+    assert_equal [6], player.validate_shot("C3")
+  end 
+  
 end 

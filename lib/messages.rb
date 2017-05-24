@@ -82,6 +82,8 @@ class Messages
     puts "Ships must be horizontal or vertical!" if error_codes.include?(2)
     puts "Coordinates do not match ship length!" if error_codes.include?(3)
     puts "Coordinates do not fall on the board!" if error_codes.include?(4)
+    puts "Shot coordinate does not fall on the board! Try again:" if error_codes.include?(5)
+    puts "You already shot at this coordinate. No Repeats! Try again:" if error_codes.include?(6)
   end 
   
 end 
