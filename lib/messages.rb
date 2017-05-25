@@ -67,7 +67,7 @@ The grid has A1 at the top left and #{bottom_right_coordinate} at the bottom rig
   end 
   
   def end_game_win(shots, time)
-    "Congrats, you won!\n\nIt took you #{shots} shots to sink your opponent's ships.\n\nThe game took #{time}.".magenta
+    "Congrats, you won!\n\nIt took you #{shots} shots to sink your opponents' ships.\n\nThe game took #{time}.".magenta
   end 
   
   def end_game_lose(shots, time)

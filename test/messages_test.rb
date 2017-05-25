@@ -111,7 +111,7 @@ The grid has A1 at the top left and L12 at the bottom right.\n"
   
   def test_end_game_win_returns_message_with_shots_and_time
     expected = "Congrats, you won!\n
-It took you 8 shots to sink your opponent's ships.\n
+It took you 8 shots to sink your opponents' ships.\n
 The game took 2 minutes and 30 seconds.".magenta
     actual = Messages.new.end_game_win(8, "2 minutes and 30 seconds")
     
