@@ -4,6 +4,7 @@ require './lib/messages'
 class MessagesTest < Minitest::Test
   
   def test_welcome_returns_welcome_message
+    skip
     expected = "Welcome to BATTLESHIP\n\nWould you like to (p)lay, read the (i)nstructions, or (q)uit?".blue
     actual = Messages.new.welcome
     

@@ -6,7 +6,7 @@ require './lib/messages'
 require './lib/board'
 
 class Game
-  attr_reader :game_size, :human, :computer
+  attr_reader :messager, :game_size, :human, :computer, :timer
   def initialize
     @messager = Messages.new
     @game_size = 4
@@ -16,86 +16,125 @@ class Game
   end 
 
   def start 
-    @timer["start"] = Time.now
+    start_timer
     puts @messager.welcome
-    input = @human.get_input
-    while input != "p" && input != "q"
-      puts @messager.instructions if input == "i" 
-      input = @human.get_input
-    end 
-    play if input == "p"
+    print_instructions_play_or_quit
+  end 
+
+  def set_up_game 
+    set_difficulty
+    create_players
+    place_player_ships
+    shot_sequence
   end 
   
-  #play
-  def play 
-    puts @messager.game_difficulty_prompt
-    @game_size = convert_difficulty_to_number(@human.get_input)
-    @computer = Computer.new(@game_size)
-    @human = Human.new(@game_size)
-    @computer.place_all_ships
-    puts @messager.computer_ship_placement_prompt
-    @human.place_all_ships
-    shot_sequence
-    #shot sequence 
-  end 
-    
   def shot_sequence
-    #repeat until at ships sunk:
-    while winner.nil?
-    #human shot
-      puts @messager.player_board_title
-      @human.board.print_grid
-      puts @messager.fire_prompt
-      shot = @human.get_player_shot
-      result = shot_result(shot, @computer)
-      h_or_m = result[0]
-      if h_or_m == "H"
-        hit_ship = result[1]
-        puts @messager.player_hit
-        @human.board.record_shot("H", shot)
-        if result[1].sunk == true
-          puts @messager.player_sink(hit_ship.size)
-        end 
-      elsif h_or_m == "M"
-        puts @messager.player_miss
-        @human.board.record_shot("M", shot)
-      end 
-      puts @messager.player_board_title
-      @human.board.print_grid
+    until winner
+      human_shot_sequence
       break if winner
-      puts @messager.proceed
-      @human.get_input
-      
-      #computer shot
-      shot = @computer.get_computer_shot
-      result = shot_result(shot, @human)
-      h_or_m = result[0]
-      if h_or_m == "H"
-        hit_ship = result[1]
-        puts @messager.computer_shot(shot, "Hit")
-        @computer.board.record_shot("H", shot)
-        if result[1].sunk == true
-          puts @messager.computer_sink(hit_ship.size)
-        end 
-      elsif h_or_m == "M"
-        puts @messager.computer_shot(shot, "Miss")
-        @computer.board.record_shot("M", shot)
-      end
-      @computer.board.print_grid
-      puts @messager.proceed
-      @human.get_input
+      computer_shot_sequence
+      enter_for_next
     end 
     end_game if winner
   end 
   
   def end_game
-    @timer["end"] = Time.now
-    if winner == @human
-      puts @messager.end_game_win(@human.shots.count, game_time)
-    elsif winner == @computer 
-      puts @messager.end_game_lose(@computer.shots.count, game_time)
-    end 
+    end_timer
+    print_end_game_message
   end
+  
+  def print_instructions_play_or_quit
+    input = @human.get_input
+    while input != "p" && input != "q"
+      puts @messager.instructions if input == "i" 
+      input = @human.get_input
+    end 
+    set_up_game if input == "p"
+  end 
+  
+  def create_players
+    @computer = Computer.new(@game_size)
+    @human = Human.new(@game_size)
+  end 
+  
+  def set_difficulty
+    puts @messager.game_difficulty_prompt
+    @game_size = convert_difficulty_to_number(@human.get_input)
+  end 
+  
+  def place_player_ships
+    @computer.place_all_ships
+    puts @messager.computer_ship_placement_prompt
+    @human.place_all_ships
+  end 
+  
+  def computer_shot_sequence
+    enter_for_next
+    shot = @computer.get_computer_shot
+    record_computer_result(shot)
+    print_player_board(@computer)
+  end 
+  
+  def human_shot_sequence
+    print_player_board(@human)
+    puts @messager.fire_prompt
+    shot = @human.get_player_shot
+    record_human_result(shot)
+    print_player_board(@human)
+  end 
+  
+  def record_human_result(shot)
+    result = shot_result(shot, @computer)
+    if result[0] == "H"
+      record_human_hit(result, shot)
+    elsif result[0] == "M"
+      record_human_miss(shot)
+    end 
+  end 
+  
+  def record_computer_result(shot)
+    result = shot_result(shot, @human)
+    if result[0] == "H"
+      record_computer_hit(result, shot)
+    elsif result[0] == "M"
+      record_computer_miss(shot)
+    end
+  end 
+  
+  def enter_for_next
+    puts @messager.proceed
+    @human.get_input
+  end 
+  
+  def record_human_hit(result, shot)
+    hit_ship = result[1]
+    puts @messager.player_hit
+    @human.board.record_shot("H", shot)
+    puts @messager.player_sink(hit_ship.size) if result[1].sunk == true
+  end 
+
+  def record_computer_hit(result, shot)
+    hit_ship = result[1]
+    puts @messager.computer_shot(shot, "hit")
+    @computer.board.record_shot("H", shot)
+    puts @messager.computer_sink(hit_ship.size) if result[1].sunk == true
+  end 
+  
+  def record_computer_miss(shot)
+    puts @messager.computer_shot(shot, "miss")
+    @computer.board.record_shot("M", shot)
+  end 
+  
+  def record_human_miss(shot)
+    puts @messager.player_miss
+    @human.board.record_shot("M", shot)
+  end 
+  
+  def print_player_board(player)
+    puts @messager.human_board_title if player == @human
+    puts @messager.computer_board_title if player == @computer
+    player.board.print_grid
+  end 
   
   def winner
     winner = nil
@@ -125,6 +164,22 @@ class Game
     separated = input.split(" ")
     separated = separated.join if separated.count < 2
     return separated
+  end 
+  
+  def print_end_game_message
+    if winner == @human
+      puts @messager.end_game_win(@human.shots.count, game_time)
+    elsif winner == @computer 
+      puts @messager.end_game_lose(@computer.shots.count, game_time)
+    end 
+  end 
+  
+  def start_timer
+    @timer["start"] = Time.now
+  end 
+  
+  def end_timer
+    @timer["end"] = Time.now
   end 
   
   def game_time

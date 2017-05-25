@@ -35,7 +35,7 @@ class Messages
     "Enter the squares for the #{size}-unit ship:"
   end 
   
-  def player_board_title
+  def human_board_title
     "Your shots:"
   end 
   
