@@ -2,7 +2,7 @@ require 'colorize'
 class Messages
 
   def welcome 
-    "Welcome to BATTLESHIP\n\nWould you like to (p)lay, read the (i)nstructions, or (q)uit?".blue
+    "Welcome to BATTLESHIP\n\nWould you like to (p)lay, read the (i)nstructions, or (q)uit?"
   end 
   
   def instructions 
