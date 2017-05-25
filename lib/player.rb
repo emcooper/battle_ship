@@ -42,6 +42,7 @@ module Player
   end 
   
   def off_board?(first, last = "A1")
+    return true if first == ""
     numerical_rows_and_columns(first, last).any? {|number| number > @game_size}
   end 
   

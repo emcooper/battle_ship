@@ -38,8 +38,8 @@ class Board
    def print_grid
      puts "===" * @length
      @grid.each do |key, value|
-       value.map! {|space| space.to_s.center(2)}
-       puts "#{key} #{value.join(" ")}"
+       padded_values = value.map {|space| space.to_s.center(2)}
+       puts "#{key} #{padded_values.join(" ")}"
      end 
      puts "===" * @length
    end 
