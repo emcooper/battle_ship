@@ -10,33 +10,35 @@ class Ship
   end 
   
   def set_coordinates(first, last)
-    #return nil if validate(first, last) == "invalid"
     @direction = set_direction(first, last)
-    return nil && print_error(4) if @direction.nil?
     row = row(first)
     column = column(first)
     if @direction == "east"
       until column > column(last)
-        @coordinates[row + column.to_s] = " "
+        add_coordinate(row, column)
         column += 1
       end 
     elsif @direction == "west"
       until column < column(last)
-        @coordinates[row + column.to_s] = " "
+        add_coordinate(row, column)
         column -= 1
       end 
     elsif @direction == "south"
       until row > row(last)
-        @coordinates[row + column.to_s] = " "
+        add_coordinate(row, column)
         row = row.next
       end 
     elsif @direction == "north"
       until row < row(last)
-        @coordinates[row + column.to_s] = " "
+        add_coordinate(row, column)
         row = previous(row)
       end   
     end 
   end
+  
+  def add_coordinate(row, column)
+    @coordinates[row + column.to_s] = " "
+  end 
   
   def set_direction(first, last)
       return "east" if column(first) < column(last)
@@ -64,22 +66,6 @@ class Ship
   
   def column(coordinate)
     coordinate[1..3].to_i
-  end 
-  
-  def validate(first, last)
-    # if (row(first) != row(last)) && (column(first) != column(last))
-    #   print_error(4)
-    #   return "invalid"
-    # end 
-    # todo need to know how Ship will interact with Board
-  end 
-  
-  def print_error(error_code)
-    errors = {1 => "You gave coordinates for the wrong ship size.",
-    2 => "Your ship cannot wrap around the board.",
-    3 => "Your ship cannot overlap with your other ships.",
-    4 => "Your ship must be horozontil or vertical."}
-    puts "#{errors[error_code]} Please try again: "
   end 
 
 end 

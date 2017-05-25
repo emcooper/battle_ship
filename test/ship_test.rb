@@ -49,15 +49,7 @@ class ShipTest < Minitest::Test
     
     assert_equal expected, ship.coordinates
   end 
-  
-  # come back to: need to find way to suppress minitest output
-  # def test_it_does_not_set_diagonal_coordinates
-  #   ship = Ship.new(3)
-  #   ship.set_coordinates("C4", "A1")
-  #   
-  #   assert_equal ({}), ship.coordinates
-  # end 
-  
+
   def test_it_sets_hit_on_given_coordinate_and_not_others
     ship = Ship.new(3)
     ship.set_coordinates("C4", "A4")
@@ -122,17 +114,4 @@ class ShipTest < Minitest::Test
     
     assert_equal 4, ship.column("C4")
   end 
-  
-  def test_print_error_prints_error_based_on_error_code
-    ship = Ship.new(2)
-    
-    expected_1 = "You gave coordinates for the wrong ship size. Please try again: \n"
-    expected_3 = "Your ship cannot overlap with your other ships. Please try again: \n"
-    
-    assert_output(expected_1){ship.print_error(1)}
-    assert_output(expected_3){ship.print_error(3)}
-  end 
-  
-  
-  
 end 

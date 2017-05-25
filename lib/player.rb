@@ -30,13 +30,10 @@ module Player
   end 
   
   def wrong_length?(first, last, ship_length)
-    if row(first) == row(last) && (column(first) - column(last)).abs + 1 != ship_length
-      return true
-    elsif column(first) == column(last) && (row(first).ord - row(last).ord).abs + 1 != ship_length
-      return true
-    end
+    return true if horizontal_wrong_length?(first, last, ship_length) || 
+    vertical_wrong_length?(first, last, ship_length)
   end 
-   
+  
   def diagonal?(first, last)
     (row(first) != row(last)) && (column(first) != column(last))
   end 
@@ -44,6 +41,14 @@ module Player
   def off_board?(first, last = "A1")
     return true if first == ""
     numerical_rows_and_columns(first, last).any? {|number| number > @game_size}
+  end 
+  
+  def horizontal_wrong_length?(first, last, ship_length)
+    row(first) == row(last) && (column(first) - column(last)).abs + 1 != ship_length
+  end 
+  
+  def vertical_wrong_length?(first, last, ship_length)
+    column(first) == column(last) && (row(first).ord - row(last).ord).abs + 1 != ship_length
   end 
   
   def other_ship_coordinates
@@ -57,26 +62,30 @@ module Player
     coordinates = []
     if direction == "east"
       until column > column(last)
-        coordinates << [row + column.to_s] 
+        coordinates << format_coordinate(row, column)
         column += 1
       end 
     elsif direction == "west"
       until column < column(last)
-        coordinates << [row + column.to_s] 
+        coordinates << format_coordinate(row, column)
         column -= 1
       end 
     elsif direction == "south"
       until row > row(last)
-        coordinates << [row + column.to_s] 
+        coordinates << format_coordinate(row, column)
         row = row.next
       end 
     elsif direction == "north"
       until row < row(last)
-        coordinates << [row + column.to_s] 
+        coordinates << format_coordinate(row, column)
         row = previous(row)
       end   
     end 
     coordinates.flatten
+  end 
+  
+  def format_coordinate(row, column)
+    row + column.to_s
   end 
   
   def previous(letter)
