@@ -3,6 +3,14 @@ require './lib/player'
 require './lib/human'
 
 class PlayerTest < Minitest::Test
+  def test_populate_fleet_populates
+    player = Human.new(4)
+    player.populate_fleet
+    
+    assert_equal 2, player.fleet.count
+    assert_instance_of Ship, player.fleet.first
+  end 
+  
   def test_validate_ship_coordinates_returns_no_codes_for_valid_coordinates
     player = Human.new(4)
     
@@ -32,7 +40,7 @@ class PlayerTest < Minitest::Test
   def test_validate_ship_coordinates_returns_code_4_for_not_on_board
     player = Human.new(4)
     
-    assert_equal [4], player.validate_ship_coordinates("A4", "A5", 2)
+    assert_equal [4], player.validate_ship_coordinates("A5", "A4", 2)
   end 
   
   def test_validate_ship_coordinates_returns_3_codes_for_coordinates_breaking_3_rules
@@ -41,7 +49,7 @@ class PlayerTest < Minitest::Test
     player.fleet[0].set_coordinates("A1", "A2")
     
     assert_equal [1,2,4], player.validate_ship_coordinates("A1", "B5", 2)
-    assert_equal [1,3,4], player.validate_ship_coordinates("A1", "A5", 2)
+    assert_equal [1,3,4], player.validate_ship_coordinates("E1", "A1", 2)
   end 
   
   def test_other_ship_coordinates_returns_array_of_coordinates

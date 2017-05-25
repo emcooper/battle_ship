@@ -53,6 +53,20 @@ class ComputerTest < Minitest::Test
     assert_equal "D1", computer.last_coordinate("B1", 3, "south")
   end 
   
+  def test_generate_shot_returns_valid_shot
+    computer = Computer.new(4)
+    
+    assert_includes ["A", "B", "C", "D"], computer.generate_shot[0]
+    assert_includes [1, 2, 3, 4], computer.generate_shot[1..3].to_i
+  end 
+  
+  def test_get_computer_shot
+    computer = Computer.new(4)
+    
+    assert_includes ["A", "B", "C", "D"], computer.get_computer_shot[0]
+    assert_includes [1, 2, 3, 4], computer.get_computer_shot[1..3].to_i
+  end 
+  
   def test_place_ship_sets_coordinates_for_2_unit_ship
     computer = Computer.new(4)
     
