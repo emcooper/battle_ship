@@ -1,4 +1,3 @@
-require 'pry'
 require 'colorize'
 require './lib/computer'
 require './lib/human'

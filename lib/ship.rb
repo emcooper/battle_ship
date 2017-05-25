@@ -1,4 +1,3 @@
-require 'pry'
 
 class Ship
   attr_reader :size, :coordinates, :direction, :sunk
@@ -67,5 +66,4 @@ class Ship
   def column(coordinate)
     coordinate[1..3].to_i
   end 
-
 end 

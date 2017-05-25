@@ -1,5 +1,4 @@
 require 'colorize'
-require 'pry'
 class Board
   attr_reader :length, :grid, :rows, :columns
   

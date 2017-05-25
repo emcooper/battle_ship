@@ -1,6 +1,5 @@
-require 'pry'
-module Player
 
+module Player
   def populate_fleet
     ships = [Ship.new(2)]
     ships << Ship.new(3)
@@ -110,5 +109,4 @@ module Player
   def column(coordinate)
     coordinate[1..3].to_i
   end 
-
 end  

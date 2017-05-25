@@ -1,6 +1,6 @@
 require 'colorize'
-class Messages
 
+class Messages
   def welcome 
     `Say "Welcome to BATTLESHIP"`
     "Welcome to BATTLESHIP\n\nWould you like to (p)lay, read the (i)nstructions, or (q)uit?".blue
