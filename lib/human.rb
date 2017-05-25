@@ -18,13 +18,16 @@ class Human
 
   def place_all_ships
     @fleet.each do |ship|
-      #while ship has empty coordinates, keep looping
-      while ship.coordinates.empty? 
-        puts @messager.human_ship_placement_prompt(ship.size)
-        coordinates = format_coordinates(get_input)
-        valid = validate_ships(coordinates, ship.size).empty?
-        ship.set_coordinates(coordinates[0], coordinates[1]) if valid
-      end 
+      place_ship(ship)
+    end 
+  end 
+  
+  def place_ship(ship)
+    while ship.coordinates.empty? 
+      puts @messager.human_ship_placement_prompt(ship.size)
+      coordinates = format_coordinates(get_input)
+      valid = validate_ships(coordinates, ship.size).empty?
+      ship.set_coordinates(coordinates[0], coordinates[1]) if valid
     end 
   end 
   
@@ -37,12 +40,17 @@ class Human
   def get_player_shot
     current_shot_count = @shots.count
     while current_shot_count == @shots.count
-      shot = format_coordinates(get_input)
-      error_codes = validate_shot(shot)
-      @messager.print_errors(error_codes)
-      @shots << shot if error_codes.empty?
-      return @shots.last if error_codes.empty?
+      shot = ask_for_shot
     end 
+    shot
+  end 
+  
+  def ask_for_shot
+    shot = format_coordinates(get_input)
+    error_codes = validate_shot(shot)
+    @messager.print_errors(error_codes)
+    @shots << shot if error_codes.empty?
+    return shot if error_codes.empty?
   end 
   
   def format_coordinates(input)

@@ -33,11 +33,16 @@ class Computer
   def get_computer_shot
     current_shot_count = @shots.count
     while current_shot_count == @shots.count
-      shot = random_coordinate
-      error_codes = validate_shot(shot)
-      @shots << shot if error_codes.empty?
-      return @shots.last if error_codes.empty?
+      shot = generate_shot
     end 
+    shot
+  end 
+  
+  def generate_shot
+    shot = random_coordinate
+    error_codes = validate_shot(shot)
+    @shots << shot if error_codes.empty?
+    return shot if error_codes.empty?
   end 
   
   def random_coordinate(direction = "none", ship = "none")

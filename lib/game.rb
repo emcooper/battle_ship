@@ -33,9 +33,10 @@ class Game
       human_shot_sequence
       break if winner
       computer_shot_sequence
+      break if winner
       enter_for_next
     end 
-    end_game if winner
+    end_game 
   end 
   
   def end_game
