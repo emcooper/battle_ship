@@ -34,7 +34,7 @@ class Game
       break if winner
       computer_shot_sequence
       break if winner
-      enter_for_next
+      @human.enter_for_next
     end 
     end_game 
   end 
@@ -76,7 +76,7 @@ class Game
   end 
   
   def computer_shot_sequence
-    enter_for_next
+    @human.enter_for_next
     shot = @computer.get_computer_shot
     record_computer_result(shot)
     print_player_board(@computer)
@@ -107,12 +107,7 @@ class Game
       record_computer_miss(shot)
     end
   end 
-  
-  def enter_for_next
-    puts @messager.proceed
-    @human.get_input
-  end 
-  
+
   def record_human_hit(result, shot)
     hit_ship = result[1]
     puts @messager.player_hit
@@ -150,15 +145,21 @@ class Game
     return winner
   end 
 
-  def shot_result(shot_coordinate, opponent)
+  def shot_result(coordinate, opponent)
     result = ["M", nil]
     opponent.fleet.each do |ship|
-      if ship.coordinates.keys.include?(shot_coordinate)
-        ship.hit(shot_coordinate)
-        result = ["H", ship] 
-      end 
+      result = hit_ship(coordinate, ship) if shot_was_hit?(coordinate, ship)
     end 
     result 
+  end 
+  
+  def shot_was_hit?(shot_coordinate, ship)
+    ship.coordinates.keys.include?(shot_coordinate)
+  end 
+  
+  def hit_ship(shot_coordinate,ship)
+    ship.hit(shot_coordinate)
+    ["H", ship] 
   end 
 
   def convert_difficulty_to_number(difficulty)

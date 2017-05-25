@@ -59,6 +59,11 @@ class Human
     return separated
   end 
 
+  def enter_for_next
+    puts @messager.proceed
+    get_input
+  end 
+
   def get_input
     print ">"
     gets.chomp
