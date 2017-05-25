@@ -17,7 +17,6 @@ class Human
   end 
 
   def place_all_ships
-    
     @fleet.each do |ship|
       #while ship has empty coordinates, keep looping
       while ship.coordinates.empty? 

@@ -83,6 +83,7 @@ class Game
       end
       @computer.board.print_grid
       puts @messager.proceed
+      @human.get_input
     end 
     end_game if winner
   end 
