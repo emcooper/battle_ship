@@ -65,8 +65,14 @@ class Game
   
   def place_player_ships
     @computer.place_all_ships
-    puts @messager.computer_ship_placement_prompt
+    puts @messager.computer_ship_placement(bottom_right_coordinate)
     @human.place_all_ships
+  end 
+  
+  def bottom_right_coordinate
+    return "L12" if @game_size == 12
+    return "H8" if @game_size == 8
+    return "D4" if @game_size == 4
   end 
   
   def computer_shot_sequence

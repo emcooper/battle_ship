@@ -36,12 +36,12 @@ class Board
    end 
    
    def print_grid
-     puts "   ".white.on_light_blue * @length
+     puts "===".light_blue * @length 
      @grid.each do |key, value|
        padded_values = value.map {|space| space.to_s.center(2)}
        puts "#{key} #{padded_values.join(" ")}"
      end 
-     puts "   ".white.on_light_blue  * @length
+     puts "===".light_blue * @length 
    end 
 end 
   
