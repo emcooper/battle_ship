@@ -35,12 +35,6 @@ class PlayerTest < Minitest::Test
     assert_equal [4], player.validate_ship_coordinates("A4", "A5", 2)
   end 
   
-  def test_validate_ship_coordinates_returns_no_codes_for_valid_coordinates
-    player = Human.new(4)
-    
-    assert_equal [], player.validate_ship_coordinates("A1", "A2", 2)
-  end 
-  
   def test_validate_ship_coordinates_returns_3_codes_for_coordinates_breaking_3_rules
     player = Human.new(4)
     player.populate_fleet

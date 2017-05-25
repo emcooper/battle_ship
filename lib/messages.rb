@@ -3,7 +3,7 @@ class Messages
 
   def welcome 
     `Say "Welcome to BATTLESHIP"`
-    "Welcome to BATTLESHIP\n\nWould you like to (p)lay, read the (i)nstructions, or (q)uit?"
+    "Welcome to BATTLESHIP\n\nWould you like to (p)lay, read the (i)nstructions, or (q)uit?".blue
   end 
   
   def instructions 
@@ -67,15 +67,11 @@ The grid has A1 at the top left and #{bottom_right_coordinate} at the bottom rig
   end 
   
   def end_game_win(shots, time)
-    `say "Congrats, you won!"`
     "Congrats, you won!\n\nIt took you #{shots} shots to sink your opponent's ships.\n\nThe game took #{time}.".magenta
   end 
   
   def end_game_lose(shots, time)
-    "Sorry, you lost.\n\n
-    It took your opponent #{shots} shots to sink your ships.\n\n
-    The game took #{time}.".magenta
-    `say "Sorry, you lost."`
+    "Sorry, you lost.\n\nIt took your opponent #{shots} shots to sink your ships.\n\nThe game took #{time}.".magenta
   end
   
   def print_errors(error_codes)
