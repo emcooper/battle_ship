@@ -118,7 +118,7 @@ class Game
   def convert_difficulty_to_number(difficulty)
     return 8 if difficulty.downcase == "i"
     return 12 if difficulty.downcase == "a"
-    else return 4 
+    return 4 
   end 
   
   def format_coordinates(input)
@@ -131,6 +131,7 @@ class Game
     sec = @timer["end"].sec - @timer["start"].sec
     min = @timer["end"].min - @timer["start"].min
     hours = @timer["end"].hour - @timer["start"].hour 
-    "#{hours * 60 + min} minutes and #{sec} seconds"
+    total_sec = (hours * 60 + min) * 60 + sec
+    "#{total_sec/60} minutes and #{total_sec.modulo(60)} seconds"
   end 
 end 
