@@ -16,16 +16,18 @@ class Computer
   
   def place_all_ships
     @fleet.each do |ship|
-      place_ship(ship) while ship.coordinates.empty? 
+      place_ship(ship) 
     end 
   end 
   
   def place_ship(ship)
-    direction = random_direction
-    first_coordinate = random_coordinate(direction, ship)
-    last_coordinate = last_coordinate(first_coordinate, ship.size, direction)
-    valid = validate_ship_coordinates(first_coordinate, last_coordinate, ship.size).empty?
-    ship.set_coordinates(first_coordinate, last_coordinate) if valid
+    while ship.coordinates.empty? 
+      direction = random_direction
+      first_coordinate = random_coordinate(direction, ship)
+      last_coordinate = last_coordinate(first_coordinate, ship.size, direction)
+      valid = validate_ship_coordinates(first_coordinate, last_coordinate, ship.size).empty?
+      ship.set_coordinates(first_coordinate, last_coordinate) if valid
+    end 
   end 
   
   def get_computer_shot
